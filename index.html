@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COE Business School</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:     #061C40;
+    --navy2:    #0A2454;
+    --blue:     #3C68F7;
+    --blue-lt:  #5A80FF;
+    --blue-pale:#EEF2FF;
+    --white:    #FFFFFF;
+    --off:      #F4F7FF;
+    --text:     #061C40;
+    --soft:     #6B7AA1;
+    --border:   rgba(60,104,247,0.15);
+    --glow:     0 0 40px rgba(60,104,247,0.25);
+    --shadow:   0 8px 40px rgba(6,28,64,0.14);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── FONDO ANIMADO ─────────────────────────────── */
+  .bg-mesh {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(60,104,247,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(90,128,255,0.12) 0%, transparent 70%),
+      var(--navy);
+  }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(60,104,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(60,104,247,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ── CONTENEDOR ────────────────────────────────── */
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+
+  /* ── LOGO ──────────────────────────────────────── */
+  .logo-block {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .logo-mark {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-lt) 100%);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px rgba(90,128,255,0.3), var(--glow);
+    position: relative;
+  }
+  .logo-mark::after {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 21px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+  }
+  .logo-mark svg {
+    width: 44px; height: 44px;
+  }
+
+  .logo-text {
+    text-align: center;
+  }
+  .logo-text h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 30%, var(--blue-lt));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .logo-text p {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-lt);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── TAGLINE ───────────────────────────────────── */
+  .tagline {
+    text-align: center;
+    margin-bottom: 44px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .tagline p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 380px;
+  }
+
+  /* ── REDES SOCIALES ────────────────────────────── */
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue-lt);
+    font-weight: 600;
+    margin-bottom: 16px;
+    align-self: flex-start;
+    width: 100%;
+    padding-left: 2px;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+
+  .social-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .social-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--blue), var(--blue-lt));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .social-btn:hover { transform: translateY(-2px); border-color: var(--blue); box-shadow: var(--glow); }
+  .social-btn:hover::before { opacity: 0.12; }
+  .social-btn:active { transform: translateY(0); }
+
+  .social-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .social-icon svg { width: 20px; height: 20px; }
+
+  .ig-icon { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .fb-icon { background: #1877F2; }
+  .li-icon { background: #0A66C2; }
+
+  .social-info { position: relative; z-index: 1; flex: 1; }
+  .social-info .s-name { font-weight: 600; font-size: 0.95rem; }
+  .social-info .s-handle { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  .social-arrow {
+    position: relative; z-index: 1;
+    color: rgba(255,255,255,0.25);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .social-btn:hover .social-arrow { color: var(--blue-lt); transform: translateX(3px); }
+
+  /* ── FORMULARIO ─────────────────────────────────── */
+  .form-section {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 32px 28px;
+    backdrop-filter: blur(12px);
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .form-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .form-section > p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 420px) { .form-row { flex-direction: column; } }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .field label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-lt);
+    font-weight: 600;
+  }
+
+  .field input,
+  .field textarea,
+  .field select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(60,104,247,0.15);
+  }
+  .field textarea { resize: vertical; min-height: 100px; }
+
+  .field-full { margin-bottom: 14px; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-lt) 100%);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(60,104,247,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(60,104,247,0.5); }
+  .submit-btn:hover::after { opacity: 1; }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* ── ESTADO ÉXITO/ERROR ────────────────────────── */
+  .form-feedback {
+    display: none;
+    text-align: center;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .form-feedback.success {
+    display: block;
+    background: rgba(60,247,130,0.1);
+    border: 1px solid rgba(60,247,130,0.25);
+    color: #4DF79A;
+  }
+  .form-feedback.error {
+    display: block;
+    background: rgba(247,80,60,0.1);
+    border: 1px solid rgba(247,80,60,0.25);
+    color: #F7503C;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  .footer {
+    margin-top: 52px;
+    text-align: center;
+    color: rgba(255,255,255,0.18);
+    font-size: 0.75rem;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+
+  /* ── ANIMACIONES ─────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<div class="wrap">
+
+  <!-- LOGO -->
+  <div class="logo-block">
+    <div class="logo-mark">
+      <!-- Logo COE: cuadro con barras ascendentes -->
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="40" height="40" rx="4" stroke="white" stroke-width="2.5" fill="none"/>
+        <rect x="8" y="28" width="6" height="10" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="17" y="20" width="6" height="18" rx="1.5" fill="white" opacity="0.8"/>
+        <rect x="26" y="12" width="6" height="26" rx="1.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h1>COE</h1>
+      <p>Business School</p>
+    </div>
+  </div>
+
+  <!-- TAGLINE -->
+  <div class="tagline">
+    <p>Formamos líderes con visión estratégica y habilidades reales para transformar organizaciones.</p>
+  </div>
+
+  <!-- REDES SOCIALES -->
+  <div class="section-label">Síguenos en redes</div>
+
+  <div class="social-grid">
+
+    <!-- INSTAGRAM -->
+    <!-- ✏️ EDITAR: cambia el href por tu URL real de Instagram -->
+    <a href="https://www.instagram.com/TU_USUARIO" target="_blank" rel="noopener" class="social-btn">
+      <div class="social-icon ig-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+      <div class="social-info">
+        <div class="s-name">Instagram</div>
+        <div class="s-handle">@coebusinessschool</div>
+      </div>
+      <div class="social-arrow">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- FACEBOOK -->
+    <!-- ✏️ EDITAR: cambia el href por tu URL real de Facebook -->
+    <a href="https://www.facebook.com/TU_PAGINA" target="_blank" rel="noopener" class="social-btn">
+      <div class="social-icon fb-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </div>
+      <div class="social-info">
+        <div class="s-name">Facebook</div>
+        <div class="s-handle">COE Business School</div>
+      </div>
+      <div class="social-arrow">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- LINKEDIN -->
+    <!-- ✏️ EDITAR: cambia el href por tu URL real de LinkedIn -->
+    <a href="https://www.linkedin.com/company/TU_EMPRESA" target="_blank" rel="noopener" class="social-btn">
+      <div class="social-icon li-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </div>
+      <div class="social-info">
+        <div class="s-name">LinkedIn</div>
+        <div class="s-handle">COE Business School</div>
+      </div>
+      <div class="social-arrow">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- FORMULARIO DE CONTACTO -->
+  <div class="form-section">
+    <h2>Escríbenos</h2>
+    <p>Te respondemos en menos de 24 horas.</p>
+
+    <!--
+      ✏️ FORMSPREE:
+      1. Ve a https://formspree.io y crea cuenta gratis
+      2. Crea un nuevo form → te dan un ID tipo "xpwzabcd"
+      3. Reemplaza "TU_ID_FORMSPREE" por ese ID abajo
+    -->
+    <form id="contact-form" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST">
+
+      <div class="form-row">
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="field">
+          <label for="apellido">Apellido</label>
+          <input type="text" id="apellido" name="apellido" placeholder="Tu apellido">
+        </div>
+      </div>
+
+      <div class="field field-full">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+      </div>
+
+      <div class="field field-full">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Enviar mensaje →</button>
+
+      <div class="form-feedback success" id="msg-success">
+        ✓ Mensaje enviado. Te contactaremos pronto.
+      </div>
+      <div class="form-feedback error" id="msg-error">
+        ✗ Hubo un error. Intenta de nuevo o escríbenos directamente.
+      </div>
+
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2025 COE Business School · Todos los derechos reservados</p>
+  </div>
+
+</div>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('msg-success');
+  const error = document.getElementById('msg-error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.reset();
+        success.style.display = 'block';
+        error.style.display = 'none';
+        btn.textContent = '✓ Enviado';
+      } else {
+        throw new Error();
+      }
+    } catch {
+      error.style.display = 'block';
+      success.style.display = 'none';
+      btn.textContent = 'Enviar mensaje →';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
